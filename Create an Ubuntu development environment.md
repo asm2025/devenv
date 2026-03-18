@@ -86,16 +86,13 @@ sudo apt install -y \
 ### 3.1 Install Zsh
 
 ```
-bashCopysudo apt install -y zsh  
+sudo apt install -y zsh  
 chsh -s "$(which zsh)"  
 ```
 
 ### 3.2 Install Oh-My-Zsh
 
 ```
-bash
-
-Copy
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"  
 ```
 
@@ -104,16 +101,13 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 Download the `ansi-dark` theme to `~/dircolors`:
 
 ```
-bash
-
-Copy
 curl -L https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-dark -o ~/dircolors  
 ```
 
 Add the following to your `~/.zshrc` to apply the colors:
 
 ```
-bashCopy# Add to ~/.zshrc  
+# Add to ~/.zshrc  
 if [ -f ~/dircolors ]; then  
     eval $(dircolors -b ~/dircolors)  
 fi  
