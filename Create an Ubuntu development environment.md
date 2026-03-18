@@ -124,16 +124,62 @@ git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 ```
 
-### 4.2 Create SSH key
+#### 4.2 Choose Your SSH Path
 
-```bash
-ssh-keygen -t ed25519 -C "you@example.com"
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
-cat ~/.ssh/id_ed25519.pub
+**Option A: You have an existing key from another PC**
+ If you have your `id_ed25519` and `id_ed25519.pub` files (e.g., on a USB or in your Windows Downloads folder):
+
+1. **Move keys into WSL**:
+
+   ```
+   mkdir -p ~/.ssh && chmod 700 ~/.ssh  
+   # Replace 'YourUser' with your Windows username  
+   cp /mnt/c/Users/YourUser/Downloads/id_ed25519* ~/.ssh/  
+   ```
+
+2. **Set strict permissions (Mandatory)**:
+    SSH will ignore keys with "too open" permissions.
+
+   ```
+   chmod 600 ~/.ssh/id_ed25519  
+   chmod 644 ~/.ssh/id_ed25519.pub  
+   ```
+
+**Option B: You want to generate a new key for this machine**
+
+```
+mkdir -p ~/.ssh && chmod 700 ~/.ssh  
+ssh-keygen -t ed25519 -C "you@example.com"  
+# Press Enter to save in default location, add a passphrase if desired.  
 ```
 
-Add the public key to your Git host (GitHub/GitLab).
+#### 4.3 Register the Key with the Agent
+
+To avoid re-entering passphrases, add the agent to your `~/.zshrc`:
+
+```
+# Append to ~/.zshrc  
+eval "$(ssh-agent -s)" > /dev/null  
+ssh-add ~/.ssh/id_ed25519  
+```
+
+#### 4.4 Link to Git Host
+
+Copy the public key to your clipboard and add it to GitHub/GitLab settings:
+
+```
+cat ~/.ssh/id_ed25519.pub  
+```
+
+#### 4.5 Verification
+
+Test the handshake:
+
+```
+ssh -T git@github.com  
+```
+
+*Expected output: "Hi [username]! You've successfully authenticated..."*
 
 ------
 
