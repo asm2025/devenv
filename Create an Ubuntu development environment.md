@@ -113,6 +113,52 @@ if [ -f ~/dircolors ]; then
 fi  
 ```
 
+### 3.4 Change the theme in ~/.zshrc
+
+Open your configuration file:
+
+```
+nano ~/.zshrc  
+```
+
+Find the line `ZSH_THEME="robbyrussell"` and change it to:
+
+```
+ZSH_THEME="agnoster"  
+```
+
+*(Note: If your other PC used a different specific theme like `powerlevel10k`, you would set that here instead, but `agnoster` is the most common "big blue arrow" theme included by default.)*
+
+#### 3.5 Install Powerline Fonts (Crucial)
+
+The "big blue arrow" is actually a special glyph from a Powerline font. If you don't install these on **Windows**, the arrow will look like a broken square or a question mark.
+
+1. **On Windows**, download and install a "Nerd Font" or "Powerline Font". [Cascadia Code PL](https://github.com/microsoft/cascadia-code/releases) or [FiraCode Nerd Font](https://www.nerdfonts.com/font-downloads) are excellent choices.
+2. Open **Windows Terminal Settings**.
+3. Go to **Profiles** > **Ubuntu** > **Appearance**.
+4. Set **Font face** to the one you just installed (e.g., `Cascadia Code PL` or `FiraCode NF`).
+
+#### 3.6 Apply Changes
+
+Back in your WSL terminal, reload the configuration:
+
+```
+source ~/.zshrc
+```
+
+#### 3.7 Troubleshooting the "User@Machine" part
+
+The `agnoster` theme often hides the `user@machine` part if your local user matches your default user to keep the prompt clean. If you want to **force** it to show (to match your other PC exactly), add this line to the very end of your `~/.zshrc`:
+
+```
+# Force prompt to show user@machine  
+prompt_context() {  
+  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then  
+    prompt_segment black default "%(!.%{%F{yellow}%}.)$USER@%m"  
+  fi  
+}  
+```
+
 ------
 
 ## 4) Git (WSL) + SSH
